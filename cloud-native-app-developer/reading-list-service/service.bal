@@ -49,7 +49,7 @@ service /readinglist on new http:Listener(9090) {
     }
 
     resource function post books(http:Headers headers,
-                                 @http:Payload BookItem newBook) returns http:Created|http:BadRequest|error {
+                                 @http:Payload BookItem newBook) returns Book[]|http:BadRequest|error {
 
         string bookId = uuid:createType1AsString();
         map<Book>|http:BadRequest usersBooks = check getUsersBooks(headers);
