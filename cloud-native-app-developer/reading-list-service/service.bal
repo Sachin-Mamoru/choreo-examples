@@ -55,7 +55,8 @@ service /readinglist on new http:Listener(9090) {
         map<Book>|http:BadRequest usersBooks = check getUsersBooks(headers);
         if (usersBooks is map<Book>) {
             usersBooks[bookId] = {...newBook, id: bookId};
-            return <http:Ok>{};
+            http:Ok ok = { body: "hello world", headers: { xtest: "foo"} };
+            return ok;
         }
         return <http:BadRequest>usersBooks;
     }
