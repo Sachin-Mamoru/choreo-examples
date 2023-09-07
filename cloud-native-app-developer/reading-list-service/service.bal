@@ -48,17 +48,9 @@ service /readinglist on new http:Listener(9090) {
         return <http:BadRequest>usersBooks;
     }
 
-    resource function post books(http:Headers headers,
-                                 @http:Payload BookItem newBook) returns Book[]|http:Ok|http:BadRequest|error {
-
-        string bookId = uuid:createType1AsString();
-        map<Book>|http:BadRequest usersBooks = check getUsersBooks(headers);
-        if (usersBooks is map<Book>) {
-            usersBooks[bookId] = {...newBook, id: bookId};
-            http:Ok ok = { body: "hello world", headers: { xtest: "foo"} };
-            return ok;
-        }
-        return <http:BadRequest>usersBooks;
+    resource function post books(http:Headers headers) returns http:Ok|error {
+        http:Ok ok = { body: "hello world", headers: { xtest: "foo"} };
+        return ok;
     }
 
     resource function delete books(http:Headers headers,
